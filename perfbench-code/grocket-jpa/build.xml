@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="grocket-jpa" basedir=".">
+    
+    <import file="../build.xml"/>
+    
+    <property file="../build.properties"/>       
+    <property name="war.name" value="grocket-jpa"/>
+
+    <target name="compile-java" depends="mvn-init">
+        <mkdir dir="target/classes"/>
+        <javac srcdir="src/main/java" destdir="target/classes" classpathref="compile.classpath"
+                debug="${javac.debug}" source="${javac.source}" target="${javac.source}"/>
+        <copy todir="target/classes">
+            <fileset dir="src/main/java" excludes="**/*.java"/>
+        </copy>
+        <copy todir="target/classes">
+            <fileset dir="src/main/resources"/>
+        </copy>
+        <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="compile.classpath"/>
+    </target>
+
+    <target name="compile-groovy-devmode" if="dev.mode">
+        <copy todir="target/temp/groovy">
+            <fileset dir="src/main/groovy" includes="grocketjpa/entity/**.*"/>
+        </copy>
+        <groovyc srcdir="target/temp/groovy" destdir="target/classes"/>
+        <copy todir="target/classes">
+            <fileset dir="src/main/groovy" excludes="grocketjpa/entity/**.*"/>
+        </copy>
+    </target>
+
+    <target name="compile" depends="compile-java, compile-groovy-devmode" unless="dev.mode">
+        <groovyc srcdir="src/main/groovy" destdir="target/classes" classpath="target/classes"/>
+        <copy todir="target/classes">
+            <fileset dir="src/main/groovy" excludes="**/*.groovy"/>
+        </copy>
+    </target>
+
+    <target name="init-devmode">
+        <property name="dev.mode" value="true"/>
+    </target>
+
+    <target name="jetty-init-devmode" depends="init-devmode">
+        <property name="jetty.jvmarg" value="-Dwicket.configuration=DEVELOPMENT"/>
+        <property name="war.path" value="target/${war.name}"/>
+        <copy todir="${war.path}">
+            <fileset dir="src/main/webapp"/>
+        </copy>
+        <replace file="${war.path}/WEB-INF/web.xml"
+            token="org.apache.wicket.protocol.http.WicketFilter"
+            value="grocketjpa.wicket.ReloadingGroovyFilter"/>
+    </target>
+
+    <target name="jetty-start-devmode" depends="jetty-init-devmode, jetty-start"/>
+
+    <target name="compile-devmode" depends="init-devmode, compile"/>
+              
+</project>
