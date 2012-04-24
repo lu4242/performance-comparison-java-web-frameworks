@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <title>JBoss Suites: Apache Wicket</title>
+    <link href="css/screen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body class="pgHome">
+<div class="document">
+    <div class="header">
+        <div class="title"><img src="img/hdr.title.gif" alt="JBoss Suites: Apache Wicket demo"/></div>
+    </div>
+    <div class="container">
+        <div class="sidebar"></div>
+        <div class="content">
+            <div class="section">
+                <h1>Register</h1>
+            </div>
+            <div class="section">
+                <form wicket:id="form">
+                <fieldset>
+                    <div class="entry">
+                        <div class="label">Username:</div>
+                        <div class="input" wicket:id="usernameBorder">
+                            <input wicket:id="username"/>
+                        </div>
+                    </div>
+                    <div class="entry">
+                        <div class="label">Real Name:</div>
+                        <div class="input" wicket:id="nameBorder">
+                            <input wicket:id="name"/>
+                        </div>
+                    </div>
+                    <div class="entry">
+                        <div class="label">Password:</div>
+                        <div class="input" wicket:id="passwordBorder">
+                            <input type="password" wicket:id="password"/>
+                        </div>
+                    </div>
+                    <div class="entry">
+                        <div class="label">Verify Password:</div>
+                        <div class="input" wicket:id="verifyBorder">
+                            <input type="password" wicket:id="verify"/>
+                        </div>
+                    </div>
+                    <div class="entry">
+                        <div class="label"></div>
+                        <div class="input">
+                            <input type="submit" value="Register"/>
+                            <input type="button" wicket:id="cancel" value="Cancel"/>
+                        </div>
+                    </div>
+                </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">Created with Apache Wicket and Hibernate 3</div>
+</div>
+</body>
+</html>
