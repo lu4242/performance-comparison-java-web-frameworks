@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Hello World</title>
+</h:head>
+<h:body>
+    <h:outputStylesheet name="style.css" library="css"/>
+    <div id="container">
+        <h1>State Size Test in JSF 2.1</h1>
+        <p>The following tests shows JSF PSS algorithm performance under 
+           selected cases and the improvements            
+            done up to MyFaces Core 2.1.7. Some improvements are</p>
+        <p></p>
+        <ul>
+            <li>Composite Components algorithm is part of facelets template algorithm, so
+            composite:insertChildren and composite:insertFacet does not have associated
+            overhead.</li>
+            <li>Dynamic parts of the component tree (c:if, ui:include src=\#{...}, c:choose, 
+                ui:define template=\#{...}) now are considered to be fully PSS compatible.
+                (see <a href="https://issues.apache.org/jira/browse/MYFACES-3451">
+                    MYFACES-3451</a> for details) 
+            </li>
+            <li>Improvements about h:outputScript and h:outputStylesheet.
+            </li>
+            <li>Other small improvements over UIComponentBase related classes.</li>
+        </ul>
+        <p>Data can change according to the analyzed view. In this case we are using a very
+        simple view.</p>
+        <h3>Examples</h3>
+        <p>Just click on any of the examples to continue.</p>
+        <h:panelGrid columns="1">
+            <h:link value="HelloWorld" outcome="helloWorld"/>
+            <h:link value="Composite Component HelloWorld" outcome="ccHelloWorld"/>
+            <h:link value="Insert Children HelloWorld" outcome="insertChildrenHelloWorld"/>
+            <h:link value="Insert Children HelloWorld With More Components" outcome="insertChildrenHelloWorld2"/>
+            <h:link value="Dynamic Include HelloWorld" outcome="dynIncludeHelloWorld"/>
+        </h:panelGrid>
+        <h3>MyFaces 2.1.7 with PSS enabled</h3>
+        <table border="1">
+            <thead>
+                <th>Example</th>
+                <th>Initial Size [bytes]</th>
+                <th>Validation Error [bytes]</th>
+                <th>Succesful Postback [bytes]</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>HelloWorld</td>
+                    <td>46</td>
+                    <td>349</td>
+                    <td>449</td>
+                </tr>
+                <tr>
+                    <td>Composite Component HelloWorld</td>
+                    <td>46</td>
+                    <td>356</td>
+                    <td>456</td>
+                </tr>
+                <tr>
+                    <td>Insert Children HelloWorld</td>
+                    <td>46</td>
+                    <td>356</td>
+                    <td>456</td>
+                </tr>
+                <tr>
+                    <td>Insert Children HelloWorld With More Components</td>
+                    <td>46</td>
+                    <td>356</td>
+                    <td>456</td>
+                </tr>
+                <tr>
+                    <td>Dynamic Include B HelloWorld</td>
+                    <td>788</td>
+                    <td>1013</td>
+                    <td>1113</td>
+                </tr>
+                <tr>
+                    <td>Dynamic Include C HelloWorld</td>
+                    <td>788</td>
+                    <td>1013</td>
+                    <td>1113</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Mojarra 2.1.7 with PSS enabled</h3>
+        <table border="1">
+            <thead>
+                <th>Example</th>
+                <th>Initial Size [bytes]</th>
+                <th>Validation Error [bytes]</th>
+                <th>Succesful Postback [bytes]</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>HelloWorld</td>
+                    <td>1836</td>
+                    <td>2014</td>
+                    <td>2138</td>
+                </tr>
+                <tr>
+                    <td>Composite Component HelloWorld</td>
+                    <td>2074</td>
+                    <td>2601</td>
+                    <td>2725</td>
+                </tr>
+                <tr>
+                    <td>Insert Children HelloWorld</td>
+                    <td>2098</td>
+                    <td>3154</td>
+                    <td>3278</td>
+                </tr>
+                <tr>
+                    <td>Insert Children HelloWorld With More Components</td>
+                    <td>2100</td>
+                    <td>3805</td>
+                    <td>3929</td>
+                </tr>
+                <tr>
+                    <td>Dynamic Include B HelloWorld</td>
+                    <td>6422</td>
+                    <td>6447</td>
+                    <td>6504</td>
+                </tr>
+                <tr>
+                    <td>Dynamic Include C HelloWorld</td>
+                    <td>9130</td>
+                    <td>9155</td>
+                    <td>9212</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>MyFaces 2.1.7 without PSS</h3>
+        <p>This is the maximum state size obtained to save the whole tree in MyFaces. 
+            Mojarra 2.1.7 has bigger values in this part, but note this is just a
+            reference. </p>
+        <table border="1">
+            <thead>
+                <th>Example</th>
+                <th>Initial Size [bytes]</th>
+                <th>Validation Error [bytes]</th>
+                <th>Succesful Postback [bytes]</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>HelloWorld</td>
+                    <td>6611</td>
+                    <td>6666</td>
+                    <td>6697</td>
+                </tr>
+                <tr>
+                    <td>Composite Component HelloWorld</td>
+                    <td>8419</td>
+                    <td>8504</td>
+                    <td>8535</td>
+                </tr>
+                <tr>
+                    <td>Insert Children HelloWorld</td>
+                    <td>7967</td>
+                    <td>8022</td>
+                    <td>8053</td>
+                </tr>
+                <tr>
+                    <td>Insert Children HelloWorld With More Components</td>
+                    <td>9015</td>
+                    <td>9070</td>
+                    <td>9101</td>
+                </tr>
+                <tr>
+                    <td>Dynamic Include B HelloWorld</td>
+                    <td>8040</td>
+                    <td>8092</td>
+                    <td>8123</td>
+                </tr>
+                <tr>
+                    <td>Dynamic Include C HelloWorld</td>
+                    <td>9152</td>
+                    <td>9214</td>
+                    <td>9235</td>
+                </tr>
+            </tbody>
+        </table>
+        <h:panelGroup>
+            <f:event listener="#{helloWorld.calculateStateSize}" type="preRenderComponent"/>
+            <br/>
+            State Size: <h:outputText value="#{facesContext.attributes['stateSize']}"/> bytes.
+            <br/>
+        </h:panelGroup>
+        <p>This postback is used to check the minimal state size for a page without "delta".
+        Since this page does not have input fields, the state should be the same size after
+        postback. But note MyFaces even if the page has no delta save some bytes (46) just to
+        be stored on the session and indicate the state for that page is valid.</p>
+        <h:form id="form1">
+            <h:commandButton value="POSTBACK"/>
+        </h:form>
+        <br/>
+        <br/>
+    </div>
+</h:body>
+</html>
