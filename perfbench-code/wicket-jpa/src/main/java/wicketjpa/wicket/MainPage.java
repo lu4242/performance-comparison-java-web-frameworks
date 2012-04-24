@@ -119,7 +119,10 @@ public class MainPage extends TemplatePage {
                     @Override
                     public void onClick() {
                         Booking booking = getModelObject();
-                        logger.info("Cancel booking: {} for {}", booking.getId(), getBookingSession().getUser().getUsername());
+                        if (BookingApplication.LOG_ENABLED)
+                        {
+                            logger.info("Cancel booking: {} for {}", booking.getId(), getBookingSession().getUser().getUsername());
+                        }
                         EntityManager em = getEntityManager();
                         Booking cancelled = em.find(Booking.class, booking.getId());
                         if (cancelled != null) {

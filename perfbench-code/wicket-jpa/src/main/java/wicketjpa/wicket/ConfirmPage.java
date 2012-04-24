@@ -28,7 +28,10 @@ public class ConfirmPage extends TemplatePage {
                 BookingSession session = getBookingSession();
                 session.info(String.format("Thank you, %s, your confimation number for %s is %s",
                         session.getUser().getName(), booking.getHotel().getName(), booking.getId()));
-                logger.info("New booking: {} for {}", booking.getId(), session.getUser().getUsername());
+                if (BookingApplication.LOG_ENABLED)
+                {
+                    logger.info("New booking: {} for {}", booking.getId(), session.getUser().getUsername());
+                }
                 loadBookings();
                 endConversation();                
                 setResponsePage(MainPage.class);

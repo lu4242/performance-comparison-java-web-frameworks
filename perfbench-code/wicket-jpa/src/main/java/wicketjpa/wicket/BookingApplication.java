@@ -14,15 +14,19 @@ import org.apache.wicket.Response;
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
+import org.apache.wicket.protocol.http.HttpSessionStore;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.protocol.http.request.urlcompressing.UrlCompressingWebRequestProcessor;
 import org.apache.wicket.request.IRequestCycleProcessor;
+import org.apache.wicket.session.ISessionStore;
 import org.apache.wicket.util.convert.ConverterLocator;
 import org.apache.wicket.util.convert.converters.BigDecimalConverter;
 
 public class BookingApplication extends WebApplication {
 
+    public static final boolean LOG_ENABLED = false;
+    
     private EntityManagerFactory emf;
 
     @Override
@@ -71,10 +75,10 @@ public class BookingApplication extends WebApplication {
         return new UrlCompressingWebRequestProcessor();
     }
 
-//    @Override
-//    protected ISessionStore newSessionStore() {
-//        return new HttpSessionStore(this);
-//    }
+    //@Override
+    //protected ISessionStore newSessionStore() {
+    //    return new HttpSessionStore(this);
+    //}
 
     @Override
     protected IConverterLocator newConverterLocator() {

@@ -46,7 +46,10 @@ public class HomePage extends WebPage {
             query.setParameter("password", password.getInput());
             List<User> users = query.getResultList();
             if (users.size() == 0) {
-                logger.error("Login failed");
+                if (BookingApplication.LOG_ENABLED)
+                {
+                    logger.error("Login failed");
+                }
                 error("Login failed");
                 return;
             }
@@ -54,7 +57,10 @@ public class HomePage extends WebPage {
             BookingSession session = BookingSession.get();            
             session.setUser(user);
             session.bind();
-            logger.info("Login succeeded");
+            if (BookingApplication.LOG_ENABLED)
+            {
+                logger.info("Login succeeded");
+            }
             session.info("Welcome, " + user.getUsername());
             setResponsePage(MainPage.class);
         }        
