@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="swicket-jpa" basedir=".">
+    
+    <import file="../build.xml"/>
+    
+    <property file="../build.properties"/>       
+    <property name="war.name" value="swicket-jpa"/>
+
+    <target name="compile" depends="mvn-init">
+        <taskdef resource="scala/tools/ant/antlib.xml" classpathref="test.classpath"/>        
+        <mkdir dir="target/classes"/>
+        <scalac srcdir="src/main/scala" destdir="target/classes" classpathref="compile.classpath"/>
+        <copy todir="target/classes">
+            <fileset dir="src/main/scala" excludes="**/*.scala"/>
+        </copy>
+        <copy todir="target/classes">
+            <fileset dir="src/main/resources"/>
+        </copy>
+    </target>
+    
+    <target name="jetty-jvmarg-init">
+        <property name="jetty.jvmarg" value="-Dwicket.configuration=DEVELOPMENT"/>
+    </target>
+
+    <target name="jetty-start-devmode" depends="jetty-jvmarg-init, jetty-start"/>
+              
+</project>
