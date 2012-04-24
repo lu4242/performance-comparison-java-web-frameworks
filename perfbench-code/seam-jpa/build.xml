@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="seam-jpa" basedir=".">
+    
+    <import file="../build.xml"/>
+    
+    <property file="../build.properties"/>       
+    <property name="war.name" value="seam-jpa"/>    
+    <property name="home.page.url" value="http://127.0.0.1:8080/${war.name}/home.seam"/>    
+              
+</project>
