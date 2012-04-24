@@ -1,0 +1,77 @@
+<html>
+<body>
+<wicket:extend>
+
+<div class="section">
+    <span class="errors" wicket:id="messages" />
+    <form wicket:id="form">
+        <h1>Search Hotels</h1>
+        <fieldset>
+            <input wicket:id="searchString" style="width: 165px;"/>&nbsp;
+            <input type="submit" wicket:id="submit" value="Find Hotels"/>
+            <img id="spinner" src="img/spinner.gif" style="display:none"/><br/>
+            <span class="label">Maximum results:</span>
+            <select wicket:id="pageSize" />
+        </fieldset>
+    </form>
+</div>
+
+<div class="section" wicket:id="hotelsContainer">
+    <span wicket:id="noResultsContainer">No Hotels Found</span>    
+    <table wicket:id="hotelsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>City, State</th>
+                <th>Zip</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr wicket:id="hotels">
+                <td wicket:id="name">[name]</td>
+                <td wicket:id="address">[address]</td>
+                <td><span wicket:id="city">[city]</span>, <span wicket:id="state">[state]</span>, <span wicket:id="country">[country]</span></td>
+                <td wicket:id="zip">[zip]</td>
+                <td><a wicket:id="view">View Hotel</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="#" wicket:id="moreResultsLink">More results</a>    
+</div>  
+
+<div class="section">
+    <h1>Current Hotel Bookings</h1>
+</div>
+<div class="section">		
+    <span wicket:id="noBookingsContainer">No Bookings Found</span>    
+    <table wicket:id="bookingsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>City, State</th>
+                <th>Check in date</th>
+                <th>Check out date</th>
+                <th>Conf number</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr wicket:id="bookings">
+                <td wicket:id="hotel.name">[name]</td>
+                <td wicket:id="hotel.address">[address]</td>
+                <td><span wicket:id="hotel.city">[city]</span>, <span wicket:id="hotel.state">[state]</span>, <span wicket:id="hotel.country">[country]</span></td>
+                <td wicket:id="checkinDate">[check in date]</td>
+                <td wicket:id="checkoutDate">[check out date]</td>
+                <td wicket:id="id">[confirmation number]</td>
+                <td><a wicket:id="cancel">Cancel</a></td>
+            </tr>
+        </tbody>
+    </table>    
+</div>
+	
+</wicket:extend>
+</body>
+</html>
