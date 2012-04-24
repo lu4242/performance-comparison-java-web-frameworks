@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>JBoss Suites: Tapestry 5</title>    
+</head>
+<body>
+    <div class="document">
+        <div class="header">
+            <div class="title"><img src="context:img/hdr.title.gif" alt="JBoss Suites: Tapestry 5 demo"/></div>
+            <div class="status">
+                Welcome ${session?.user.name}
+                | <t:pagelink page="mainPage">Search</t:pagelink>
+                | <t:pagelink page="passwordPage">Settings</t:pagelink>
+                | <t:actionlink t:id="logout">Logout</t:actionlink>
+            </div>
+        </div>
+        <div class="container">
+            <div class="sidebar"></div>
+            <div class="content">
+                <t:body/>
+            </div>
+        </div>
+        <div class="footer">Created with Tapestry 5 and Hibernate 3</div>
+    </div>
+</body>
+</html>
