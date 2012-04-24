@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="grails-gorm" basedir=".">
+    
+    <import file="../build.xml"/>    
+    <property file="../build.properties"/>
+    <property name="war.name" value="grails-gorm"/>
+    <property name="jmeter.script" value="etc/booking.jmx"/>    
+    
+    <target name="check-war-exploded">
+        <available file="target/${war.name}/WEB-INF/web.xml" property="war.exploded"/>
+    </target>   
+    
+    <target name="war-exploded" depends="check-war-exploded" unless="war.exploded">
+        <antcall target="mvn-grails-war"/> 
+        <antcall target="war-unzip"/>
+    </target>
+    
+    <target name="mvn-grails-war" depends="mvn-init" xmlns:artifact="urn:maven-artifact-ant">         
+        <artifact:mvn pom="pom.xml" >
+            <arg value="grails:war"/>
+            <localRepository refid="local.repository"/>
+        </artifact:mvn>        
+    </target>     
+    
+    <target name="jetty-init" depends="utils-compile, war-exploded">
+        <property name="context.path" value="/${war.name}"/>
+        <property name="war.path" value="target/${war.name}"/>
+        <path id="jetty.classpath">            
+            <path path="../jmeter-utils/target/classes"/>
+            <path refid="utils.classpath"/>            
+        </path>
+        <property name="jetty.jvmarg" value=""/>      
+    </target>  
+    
+    <target name="war-unzip">
+        <unzip src="grails-gorm-1.0-SNAPSHOT.war" dest="target/${war.name}"/>
+    </target>        
+              
+</project>
