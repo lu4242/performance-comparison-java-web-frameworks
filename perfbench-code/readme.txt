@@ -71,6 +71,17 @@ in the seam-jpa source - except for formatting and the different package name.
 Uses Tapestry 5 and is not fully complete, validation of forms using Hibernate validator
 is not yet done.  Gave up because it was too hard.  Maybe someone can help me complete it.
 
+7) myfaces-jpa
+
+JSF 2.0 application for myfaces (2.1.7). 
+
+8) mojarra-jpa
+
+JSF 2.0 application for mojarra. (2.1.7)
+
+9) wicket15-jpa
+
+Wicket 1.5 version of the tests.
 
 ================================================================================
 Information on open source projects from which some of the code in this
@@ -90,8 +101,6 @@ and is disributed under the Apache 2.0 license: http://maven.apache.org/license.
 
 --------------------------------------------------------------------------------
 
-For any queries related to PerfBench - please contact the author using the 
-open-source project hosting services.at http://code.google.com/p/perfbench/
 
 
 
