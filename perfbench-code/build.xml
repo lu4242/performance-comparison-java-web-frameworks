@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- sample build.properties: 
+
+# maven.repo.local is optional and will default to ${user.home}/.m2/repository
+
+maven.repo.local=C:/myrepository
+jmeter.home=C:/jakarta-jmeter-2.3.2
+
+-->
+
+<project name="booking-perf" basedir="."> 
+
+    <property name="javac.source" value="1.6"/>
+    <property name="javac.debug" value="true"/>   
+
+    <!-- ========================= MAVEN ============================ -->
+    
+    <target name="mvn-init" unless="mvn.inited" xmlns:artifact="urn:maven-artifact-ant">
+        <property name="mvn.inited" value="true"/>
+        <typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant" 
+            classpath="../lib/maven-ant-tasks.jar"/> 
+        <condition property="maven.repo.local" value="${maven.repo.local}" else="${user.home}/.m2/repository">
+            <isset property="maven.repo.local"/>
+        </condition>           
+        <echo>maven.local.repo=${maven.repo.local}</echo>
+        <artifact:localRepository id="local.repository" path="${maven.repo.local}"/> 
+        <artifact:pom file="pom.xml" id="maven.project"/>        
+        <artifact:dependencies pathId="compile.classpath" filesetId="compile.fileset" useScope="compile">
+            <pom refid="maven.project"/>
+            <localRepository refid="local.repository"/>
+        </artifact:dependencies>
+        <artifact:dependencies pathId="test.classpath" filesetId="test.fileset" useScope="test">
+            <pom refid="maven.project"/>
+            <localRepository refid="local.repository"/>
+        </artifact:dependencies>
+        <artifact:dependencies pathId="runtime.classpath" filesetId="runtime.fileset" useScope="runtime">
+            <pom refid="maven.project"/>
+            <localRepository refid="local.repository"/>
+        </artifact:dependencies>
+        <artifact:dependencies pathId="utils.classpath" useScope="compile">
+            <pom file="../jmeter-utils/pom.xml"/>
+            <localRepository refid="local.repository"/>
+        </artifact:dependencies>        
+    </target>
+    
+    <!-- ========================= BUILD ============================ -->
+    
+    <target name="clean">
+        <delete includeemptydirs="true" failonerror="false">
+            <fileset dir="target"/>
+            <fileset dir="../jmeter-utils/target"/>
+            <fileset dir="../target"/>
+        </delete>      
+    </target>        
+    
+    <target name="compile" depends="mvn-init">
+        <mkdir dir="target/classes"/>        
+        <javac srcdir="src/main/java" destdir="target/classes" classpathref="compile.classpath"
+                debug="${javac.debug}" source="${javac.source}" target="${javac.source}"/>
+        <copy todir="target/classes">
+            <fileset dir="src/main/java" excludes="**/*.java"/>
+        </copy>         
+        <copy todir="target/classes">
+            <fileset dir="src/main/resources"/>
+        </copy>              
+    </target>        
+    
+    <!-- ========================= JMETER ============================ -->  
+    
+    <target name="jmeter-clean">        
+        <delete failonerror="false">
+            <fileset dir="../target" includes="${war.name}*.*"/>
+        </delete>
+    </target>
+    
+    <target name="utils-compile" depends="mvn-init">
+        <mkdir dir="../target"/>
+        <mkdir dir="../jmeter-utils/target/classes"/>
+        <javac srcdir="../jmeter-utils/src/main/java" destdir="../jmeter-utils/target/classes" classpathref="utils.classpath"
+                debug="${javac.debug}" source="${javac.source}" target="${javac.source}"/>     
+    </target>   
+    
+    <target name="jmeter-init">  
+        <condition property="home.page.url" value="${home.page.url}" else="http://127.0.0.1:8080/${war.name}/">
+            <isset property="home.page.url"/>
+        </condition>  
+        <condition property="jmeter.script" value="${jmeter.script}" else="src/test/jmeter/booking.jmx">
+            <isset property="jmeter.script"/>
+        </condition>        
+        <path id="jmeter.classpath">
+            <fileset dir="${jmeter.home}/extras">
+              <include name="ant-jmeter*.jar"/>
+            </fileset>
+        </path>    
+        <taskdef name="jmeter" classpathref="jmeter.classpath" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask"/>        
+        <property name="include.logout" value="1"/>
+        <property name="include.delete" value="0"/>
+        <property name="loop.count" value="1"/>
+        <property name="booking.count" value="10"/>
+    </target>    
+    
+    <target name="jmeter-input" unless="thread.count">
+        <input message="number of threads:" addproperty="thread.count"/>
+    </target>
+    
+    <target name="jmeter-input-warmup" unless="warmup.count">
+        <input message="warmup loop count:" addproperty="warmup.count"/>
+    </target>    
+
+    <target name="jmeter" depends="jmeter-input, jmeter-init">    
+        <echo>jmeter: loop count: ${loop.count}, thread count: ${thread.count}, booking count: ${booking.count}</echo>
+        <echo>jmeter: include logout: ${include.logout}, include delete: ${include.delete}</echo>               
+        <jmeter jmeterhome="${jmeter.home}" testplan="${jmeter.script}" resultlog="../target/${war.name}_${thread.count}.jtl">
+            <property name="jmeter.save.saveservice.assertion_results" value="all"/>
+            <property name="jmeter.save.saveservice.output_format" value="xml"/>
+            <property name="thread.count" value="${thread.count}"/>
+            <property name="include.logout" value="${include.logout}"/>
+            <property name="include.delete" value="${include.delete}"/>
+            <property name="loop.count" value="${loop.count}"/>
+            <property name="booking.count" value="${booking.count}"/>
+        </jmeter>
+    </target>   
+    
+    <target name="jmeter-report">              
+        <java classname="jmeterutils.JmeterLogParser" classpath="../jmeter-utils/target/classes" fork="true">            
+            <arg value="../target/${war.name}_${thread.count}.jtl"/>
+            <arg value="${thread.count}"/>
+            <arg value="../target/${war.name}.xml"/>
+            <jvmarg value="-server"/>
+        </java>
+    </target>  
+    
+    <target name="jmeter-wait">
+        <echo>polling for home page: ${home.page.url}</echo>
+        <waitfor>
+            <http url="${home.page.url}"/>                    
+        </waitfor>
+        <echo>home page available, proceeding...</echo>     
+    </target>
+    
+    <target name="jmeter-cycle" depends="jmeter-input, jmeter-init">               
+        <parallel>
+            <antcall target="jetty-start"/>
+            <sequential>                
+                <antcall target="jmeter-wait"/>              
+                <antcall target="jmeter"/>                
+                <antcall target="jetty-stop"/>    
+                <antcall target="jmeter-report"/>
+            </sequential>
+        </parallel>
+    </target>      
+    
+    <target name="jmeter-cycle-full" depends="jmeter-clean, jmeter-init">       
+        <antcall target="jmeter-cycle">
+            <param name="thread.count" value="1"/>
+        </antcall>    
+        <antcall target="jmeter-cycle">
+            <param name="thread.count" value="5"/>
+        </antcall>         
+        <antcall target="jmeter-cycle">
+            <param name="thread.count" value="10"/>
+        </antcall>
+        <antcall target="jmeter-cycle">
+            <param name="thread.count" value="15"/>
+        </antcall>
+        <antcall target="jmeter-cycle">
+            <param name="thread.count" value="20"/>
+        </antcall>  
+        <antcall target="jmeter-report-full"/>
+    </target>      
+    
+    <target name="jmeter-report-full">
+        <java classname="jmeterutils.ResultsParser" classpath="../jmeter-utils/target/classes" fork="true">            
+            <arg value="../target/${war.name}.xml"/>
+            <arg value="../target/${war.name}.csv"/>
+            <arg value="../target/${war.name}.txt"/>
+            <jvmarg value="-server"/>
+        </java>    
+    </target>
+    
+    <target name="jmeter-cycle-heapdump" depends="jmeter-input, jmeter-init, jetty-init">               
+        <parallel>
+            <java classname="jmeterutils.JettyStart" fork="true">
+                <classpath refid="jetty.classpath"/>  
+                <jvmarg value="-Xms128m"/>
+                <jvmarg value="-Xmx128m"/>                
+                <jvmarg value="-Dcom.sun.management.jmxremote"/>
+                <jvmarg value="-Dcom.sun.management.jmxremote.port=9004"/>
+                <jvmarg value="-Dcom.sun.management.jmxremote.authenticate=false"/>
+                <jvmarg value="-Dcom.sun.management.jmxremote.ssl=false"/>
+                <jvmarg value="-server"/>
+                <jvmarg value="${jetty.jvmarg}"/>
+                <arg value="${context.path}"/>
+                <arg value="${war.path}"/>                
+            </java>             
+            <sequential>
+                <antcall target="jmeter-wait"/>                
+                <antcall target="jmeter">                    
+                    <param name="include.logout" value="0"/>                    
+                </antcall>                
+                <java classname="jmeterutils.JmxHeapDumper" classpath="../jmeter-utils/target/classes" fork="true">            
+                    <arg value="../target/${war.name}_${thread.count}.hprof"/>
+                </java>                
+                <antcall target="jetty-stop"/>                
+            </sequential>
+        </parallel>
+    </target>
+    
+    <target name="jmeter-cycle-samejvm">
+        <java classname="jmeterutils.JettyStop" classpath="../jmeter-utils/target/classes">
+            <arg value="restart"/>
+        </java>
+        <antcall target="jmeter-wait"/>
+        <antcall target="jmeter"/>
+        <antcall target="jmeter-report"/>     
+    </target>
+    
+    <target name="jmeter-cycle-warmup" depends="jmeter-input-warmup, jmeter-input, jmeter-init, jetty-init">        
+        <parallel>
+            <java classname="jmeterutils.JettyStart" fork="true" output="../target/warmup.log">
+                <classpath refid="jetty.classpath"/>
+                <jvmarg value="-Xms128m"/>
+                <jvmarg value="-Xmx128m"/>
+                <jvmarg value="-server"/>
+                <jvmarg value="${jetty.jvmarg}"/>
+                <arg value="${context.path}"/>
+                <arg value="${war.path}"/>                
+                <jvmarg value="-XX:+PrintCompilation"/>
+            </java>
+            <sequential>                
+                <antcall target="jmeter-wait"/>                          
+                <antcall target="jmeter">
+                    <param name="thread.count" value="1"/>
+                    <param name="include.delete" value="1"/>
+                    <param name="loop.count" value="${warmup.count}"/>
+                    <param name="booking.count" value="1"/>                    
+                </antcall>
+                <antcall target="jmeter-clean"/>
+                <antcall target="jmeter">
+                    <param name="thread.count" value="${thread.count}"/>                    
+                </antcall>              
+                <antcall target="jetty-stop"/>                
+            </sequential>           
+        </parallel>
+        <antcall target="jmeter-report"/>
+        <antcall target="jmeter-report-full"/>        
+    </target>
+    
+    <target name="jmeter-cycle-full-warmup" depends="jmeter-input-warmup, jmeter-init">        
+        <parallel>
+            <antcall target="jetty-start"/>
+            <sequential>                
+                <antcall target="jmeter-wait"/>                          
+                <antcall target="jmeter">
+                    <param name="thread.count" value="1"/>
+                    <param name="include.delete" value="1"/>
+                    <param name="loop.count" value="${warmup.count}"/>
+                    <param name="booking.count" value="1"/>                    
+                </antcall>
+                <antcall target="jmeter-clean"/>                
+                <antcall target="jmeter-cycle-samejvm">
+                    <param name="thread.count" value="1"/>
+                </antcall>
+                <antcall target="jmeter-cycle-samejvm">
+                    <param name="thread.count" value="5"/>
+                </antcall>
+                <antcall target="jmeter-cycle-samejvm">
+                    <param name="thread.count" value="10"/>
+                </antcall>
+                <antcall target="jmeter-cycle-samejvm">
+                    <param name="thread.count" value="15"/>
+                </antcall>
+                <antcall target="jmeter-cycle-samejvm">
+                    <param name="thread.count" value="20"/>
+                </antcall>                
+                <antcall target="jetty-stop"/>                
+            </sequential>           
+        </parallel>
+        <antcall target="jmeter-report-full"/>
+    </target>      
+    
+    <!-- ========================= JETTY ============================ -->
+    
+    <target name="jetty-init" depends="compile, utils-compile">
+        <property name="context.path" value="/${war.name}"/>
+        <condition property="war.path" value="${war.path}" else="src/main/webapp">
+            <isset property="war.path"/>
+        </condition>        
+        <property name="war.path" value="src/main/webapp"/>
+        <path id="jetty.classpath">
+            <path path="target/classes"/>
+            <path path="../jmeter-utils/target/classes"/>
+            <path refid="test.classpath"/>
+            <path refid="utils.classpath"/>
+        </path>
+        <condition property="jetty.jvmarg" value="${jetty.jvmarg}" else="">
+            <isset property="jetty.jvmarg"/>
+        </condition>         
+    </target>
+    
+    <target name="jetty-start" depends="jetty-init">        
+        <java classname="jmeterutils.JettyStart" fork="true">
+            <classpath refid="jetty.classpath"/>
+            <jvmarg value="-Xms128m"/>
+            <jvmarg value="-Xmx128m"/>
+            <jvmarg value="-server"/>
+            <jvmarg value="${jetty.jvmarg}"/>
+            <!-- <jvmarg value="-XX:+PrintCompilation"/> -->
+            <arg value="${context.path}"/>
+            <arg value="${war.path}"/>
+        </java>    
+    </target>
+    
+    <target name="jetty-restart">
+        <java classname="jmeterutils.JettyStop" classpath="../jmeter-utils/target/classes">
+            <arg value="restart"/>
+        </java>
+    </target>
+    
+    <target name="jetty-stop">
+        <java classname="jmeterutils.JettyStop" classpath="../jmeter-utils/target/classes"/>   
+    </target>    
+    
+    <target name="jetty-start-profile" depends="jetty-init">
+        <fail unless="netbeans.home">this target works only in netbeans</fail>
+        <nbprofiledirect>
+            <classpath refid="jetty.classpath"/>
+        </nbprofiledirect>
+        <java classname="jmeterutils.JettyStart" fork="true">
+            <classpath refid="jetty.classpath"/>  
+            <jvmarg value="-Xmx512m"/>        
+            <jvmarg value="${profiler.info.jvmargs.agent}"/> 
+            <jvmarg value="${jetty.jvmarg}"/>
+            <arg value="${context.path}"/>
+            <arg value="${war.path}"/>            
+        </java>    
+    </target>              
+    
+    <!-- ========================= MISC ============================ -->
+    
+    <target name="dist">
+        <mkdir dir="target"/>
+        <zip destfile="target/perfbench.zip">
+            <zipfileset dir="." prefix="perfbench">
+                <exclude name="target/"/>
+                <exclude name="*/target/"/>
+                <exclude name="*/nbproject/"/>
+                <exclude name="*/catalog.xml"/>
+                <exclude name="*/build-deps.properties"/>
+                <exclude name="*/*.war"/> 
+                <exclude name="*/plugins/"/> 
+            </zipfileset>
+        </zip>        
+    </target>       
+    
+    <target name="netbeans-props" depends="mvn-init">        
+        <pathconvert targetos="unix" property="test.classpath.text" refid="test.classpath"/>        
+        <concat destfile="build-deps.properties">test.classpath=${test.classpath.text}</concat>
+    </target> 
+    
+    <target name="dist-jars" depends="mvn-init">             
+        <copy todir="lib" flatten="true">
+            <fileset refid="test.fileset"/>         
+        </copy>        
+    </target>     
+              
+</project>
