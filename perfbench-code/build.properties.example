@@ -1,0 +1,11 @@
+# It is necessary to create a build.properties file like this one to run
+# the tests using ant
+
+# maven.repo.local is optional and will default to ${user.home}/.m2/repository
+# maven.repo.local=C:/myrepository
+
+# Set JMeter Home
+jmeter.home=D:/workspace/perfbench/jakarta-jmeter-2.5.1
+
+# Set host ip where the app is deployed
+context.host=localhost
