@@ -95,9 +95,12 @@ jmeter.home=C:/jakarta-jmeter-2.3.2
         </path>    
         <taskdef name="jmeter" classpathref="jmeter.classpath" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask"/>        
         <property name="include.logout" value="1"/>
-        <property name="include.delete" value="0"/>
-        <property name="loop.count" value="1"/>
-        <property name="booking.count" value="10"/>
+        <property name="include.delete" value="1"/><!-- 0 -->
+        <property name="include.ajax" value="1"/>
+        <property name="loop.count" value="1"/><!-- 1 -->
+        <property name="booking.count" value="10"/><!-- 10 -->
+        <property name="thread.delay" value="0"/>
+        <property name="thread.deviation" value="0"/>
     </target>    
     
     <target name="jmeter-input" unless="thread.count">
@@ -117,10 +120,93 @@ jmeter.home=C:/jakarta-jmeter-2.3.2
             <property name="thread.count" value="${thread.count}"/>
             <property name="include.logout" value="${include.logout}"/>
             <property name="include.delete" value="${include.delete}"/>
+            <property name="include.ajax" value="${include.ajax}"/>
             <property name="loop.count" value="${loop.count}"/>
             <property name="booking.count" value="${booking.count}"/>
+            <property name="context.host" value="${context.host}"/>
         </jmeter>
     </target>   
+
+    <target name="jmeter-input-custom" unless="thread.count">
+        <input message="loop count:" addproperty="loop.count"/>
+        <input message="number of threads:" addproperty="thread.count"/>
+        <input message="booking count:" addproperty="booking.count"/>
+        <input message="thread delay:" addproperty="thread.delay"/>
+        <input message="thread deviation:" addproperty="thread.deviation"/>
+        <input message="thread rampup period (1s if 5 thread, 5s if 40 thread):" addproperty="thread.rampup"/>
+    </target>
+
+    <target name="jmeter-custom" depends="jmeter-input-custom, jmeter-init">    
+        <echo>jmeter: loop count: ${loop.count}, thread count: ${thread.count}, booking count: ${booking.count}</echo>
+        <echo>jmeter: include logout: ${include.logout}, include delete: ${include.delete}, include ajax: ${include.ajax}</echo>
+        <echo>jmeter: thread delay: ${thread.delay}, thread deviation: ${thread.deviation}</echo>
+        <jmeter jmeterhome="${jmeter.home}" testplan="${jmeter.script}" resultlog="../target/${war.name}_${thread.count}_${loop.count}.jtl">
+            <property name="jmeter.save.saveservice.assertion_results" value="all"/>
+            <property name="jmeter.save.saveservice.output_format" value="xml"/>
+            <property name="thread.count" value="${thread.count}"/>
+            <property name="include.logout" value="${include.logout}"/>
+            <property name="include.delete" value="${include.delete}"/>
+		    <property name="include.ajax" value="${include.ajax}"/>
+            <property name="loop.count" value="${loop.count}"/>
+            <property name="booking.count" value="${booking.count}"/>
+            <property name="thread.delay" value="${thread.delay}"/>
+            <property name="thread.deviation" value="${thread.deviation}"/>
+            <property name="thread.rampup" value="${thread.rampup}"/>
+            <property name="context.host" value="${context.host}"/>
+        </jmeter>
+    </target>
+
+    <!-- like jmeter-custom, but does not log report -->
+    <target name="jmeter-custom-warmup" depends="jmeter-input-custom, jmeter-init">    
+        <echo>jmeter: loop count: ${loop.count}, thread count: ${thread.count}, booking count: ${booking.count}</echo>
+        <echo>jmeter: include logout: ${include.logout}, include delete: ${include.delete}, include ajax: ${include.ajax}</echo>
+        <echo>jmeter: thread delay: ${thread.delay}, thread deviation: ${thread.deviation}</echo>
+        <jmeter jmeterhome="${jmeter.home}" testplan="${jmeter.script}"  resultlog="../target/${war.name}_warmup_${thread.count}_${loop.count}.jtl">
+            <property name="jmeter.save.saveservice.assertion_results" value="all"/>
+            <property name="jmeter.save.saveservice.output_format" value="xml"/>
+            <property name="thread.count" value="${thread.count}"/>
+            <property name="include.logout" value="${include.logout}"/>
+            <property name="include.delete" value="${include.delete}"/>
+		    <property name="include.ajax" value="${include.ajax}"/>
+            <property name="loop.count" value="${loop.count}"/>
+            <property name="booking.count" value="${booking.count}"/>
+            <property name="thread.delay" value="${thread.delay}"/>
+            <property name="thread.deviation" value="${thread.deviation}"/>
+            <property name="thread.rampup" value="${thread.rampup}"/>
+            <property name="context.host" value="${context.host}"/>
+        </jmeter>
+    </target>
+
+    <target name="jmeter-input-custom-no-ajax" unless="thread.count">
+        <input message="loop count:" addproperty="loop.count"/>
+        <input message="number of threads:" addproperty="thread.count"/>
+        <input message="booking count:" addproperty="booking.count"/>
+        <input message="thread delay:" addproperty="thread.delay"/>
+        <input message="thread deviation:" addproperty="thread.deviation"/>
+        <input message="thread rampup period (1s if 5 thread, 5s if 40 thread):" addproperty="thread.rampup"/>
+        <property name="include.ajax" value="0"/>
+    </target>
+
+    <target name="jmeter-custom-no-ajax" depends="jmeter-input-custom-no-ajax, jmeter-init">    
+        <echo>jmeter: loop count: ${loop.count}, thread count: ${thread.count}, booking count: ${booking.count}</echo>
+        <echo>jmeter: include logout: ${include.logout}, include delete: ${include.delete}, include ajax: ${include.ajax}</echo>
+        <echo>jmeter: thread delay: ${thread.delay}, thread deviation: ${thread.deviation}</echo>
+        <jmeter jmeterhome="${jmeter.home}" testplan="${jmeter.script}" resultlog="../target/${war.name}_${thread.count}.jtl">
+            <property name="jmeter.save.saveservice.assertion_results" value="all"/>
+            <property name="jmeter.save.saveservice.output_format" value="xml"/>
+            <property name="thread.count" value="${thread.count}"/>
+            <property name="include.logout" value="${include.logout}"/>
+            <property name="include.delete" value="${include.delete}"/>
+		    <property name="include.ajax" value="${include.ajax}"/>
+            <property name="loop.count" value="${loop.count}"/>
+            <property name="booking.count" value="${booking.count}"/>
+            <property name="thread.delay" value="${thread.delay}"/>
+            <property name="thread.deviation" value="${thread.deviation}"/>
+            <property name="context.host" value="${context.host}"/>
+        </jmeter>
+
+    </target>   
+
     
     <target name="jmeter-report">              
         <java classname="jmeterutils.JmeterLogParser" classpath="../jmeter-utils/target/classes" fork="true">            
