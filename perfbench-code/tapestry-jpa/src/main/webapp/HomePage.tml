@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>JBoss Suites: Tapestry 5</title>    
+</head>
+<body class="pgHome">
+<div class="document">
+    <div class="header">
+        <div class="title"><img src="img/hdr.title.gif" alt="JBoss Suites: Tapestry 5 demo"/></div>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <form t:id="form">                
+            <fieldset>
+                <div>
+                    <span class="label">Login Name</span>
+                    <input t:type="TextField" t:id="username" style="width: 175px;"/>
+                </div>
+                <div>
+                    <span class="label">Password</span>
+                    <input t:type="PasswordField" t:id="password" style="width: 175px;"/>
+                </div>
+                <div class="errors">${message}</div>
+                <div class="buttonBox"><input type="submit" value="Account Login"/></div>
+                <div class="notes"><t:pagelink page="registerPage">Register New User</t:pagelink></div>
+                <div class="subnotes">
+                    Or use a demo account:
+                    <ul>
+                        <li>gavin/foobar</li>
+                        <li>demo/demo</li>
+                    </ul>
+                </div>
+            </fieldset>
+            </form>
+        </div>
+    </div>
+    <div class="footer">Created with Tapestry 5 and Hibernate 3</div>
+</div>
+</body>
+</html>

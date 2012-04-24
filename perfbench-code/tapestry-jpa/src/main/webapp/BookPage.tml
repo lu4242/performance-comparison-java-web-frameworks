@@ -1,0 +1,87 @@
+<html t:type="template" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+<body>      
+
+<div class="section">
+  <h1>Book Hotel</h1>
+</div>
+<div class="section">
+  <div class="entry">
+    <div class="label">Name:</div>
+    <div class="output">${booking.hotel.name}</div>
+  </div>
+  <div class="entry">
+    <div class="label">Address:</div>
+    <div class="output">${booking.hotel.address}</div>
+  </div>
+  <div class="entry">
+    <div class="label">City, State:</div>
+    <div class="output">${booking.hotel.city}, ${booking.hotel.state}</div>
+  </div>
+  <div class="entry">
+    <div class="label">Zip:</div>
+    <div class="output">${booking.hotel.zip}</div>
+  </div>
+  <div class="entry">
+    <div class="label">Country:</div>
+    <div class="output">${booking.hotel.country}</div>
+  </div>
+  <div class="entry">
+    <div class="label">Nightly rate:</div>
+    <div class="output"><t:output value="booking.hotel.price" format="currencyFormat"/></div>
+  </div>
+  <t:form t:id="form">
+    <div class="entry">
+      <div class="label">Check In Date:</div>
+      <t:datefield value="booking.checkinDate"/>
+    </div>
+    <div class="entry">
+      <div class="label">Check Out Date:</div>
+      <t:datefield value="booking.checkoutDate"/>
+    </div>
+    <div class="entry">
+      <div class="label">Room Preference:</div>
+      <div class="input">
+        <t:select value="booking.beds" model="literal:1=One king-sized bed,2=Two double beds,3=Three beds"/>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="label">Smoking Preference:</div>
+      <div class="input">
+        <t:radiogroup value="booking.smoking">
+            Smoking <t:radio value="literal:true"/>
+            Non Smoking <t:radio value="literal:false"/>
+        </t:radiogroup>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="label">Credit Card #:</div>
+      <div class="input">
+        <input t:type="TextField" t:value="booking.creditCard"/>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="label">Credit Card Name:</div>
+      <div class="input">
+        <input t:type="TextField" t:value="booking.creditCardName"/>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="label">Credit Card Expiry:</div>
+      <div class="input">
+        <t:select value="booking.creditCardExpiryMonth" 
+            model="literal:1=Jan,2=Feb,3=Mar,4=Apr,5=May,6=Jun,7=Jul,8=Aug,9=Sep,10=Oct,11=Nov,12=Dec"/>
+        <t:select value="booking.creditCardExpiryYear" model="literal:2006,2007,2008,2009,2010,2011"/>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="label"></div>
+      <div class="input">
+        <input type="submit" value="Proceed"/>&#160;
+        <t:submit t:id="cancel" value="Cancel"/>
+      </div>
+    </div>
+  </t:form>
+</div>
+   
+</body>
+</html>

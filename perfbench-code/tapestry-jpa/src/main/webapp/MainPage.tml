@@ -1,0 +1,86 @@
+<html t:type="template" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+<body>      
+
+<div class="section">
+    <div class="errors">${message}</div>
+    <t:form t:id="form" zone="hotelsZone">
+        <h1>Search Hotels</h1>
+        <fieldset>
+            <input t:type="TextField" t:value="session.searchString" style="width: 165px;"
+                t:mixins="ajaxFormSubmit" t:onEvent="onkeyup" t:formId="form"/>&#160;
+            <input type="submit" value="Find Hotels"/>
+            <img id="ajaxIndicator" src="img/spinner.gif" style="display:none"/><br/>
+            <span class="label">Maximum results:</span>&#160;
+            <t:select t:value="session.pageSize" model="literal:5,10,20"/>
+        </fieldset>
+    </t:form>
+</div>
+
+<div class="section">
+<t:zone t:id="hotelsZone">    
+    <t:if test="!session.hotels">
+        No Hotels Found
+        <p:else>
+            <table id="hotelsTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>City, State</th>
+                        <th>Zip</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t:type="loop" source="session.hotels" value="hotel">
+                        <td>${hotel.name}</td>
+                        <td>${hotel.address}</td>
+                        <td>${hotel.city}, ${hotel.state}, ${hotel.country}</td>
+                        <td>${hotel.zip}</td>
+                        <td><a t:type="pagelink" page="hotelPage" context="hotel.id">View Hotel</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <t:if test="nextPageAvailable"><t:actionlink t:id="nextPage">More results</t:actionlink></t:if>
+        </p:else>
+    </t:if>
+</t:zone>
+</div>
+
+<div class="section">
+  <h1>Current Hotel Bookings</h1>
+</div>
+<div class="section">
+  <t:if test="!session.bookings">
+    No Bookings Found
+    <p:else>
+      <table>
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>City, State</th>
+                  <th>Check in date</th>
+                  <th>Check out date</th>
+                  <th>Conf number</th>
+                  <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>              
+              <tr t:type="loop" source="session.bookings" value="booking">
+                  <td>${booking.hotel.name}</td>
+                  <td>${booking.hotel.address}</td>
+                  <td>${booking.hotel.city}, ${booking.hotel.state}, ${booking.hotel.country}</td>
+                  <td>${booking.checkinDate}</td>
+                  <td>${booking.checkoutDate}</td>
+                  <td>${booking.id}</td>
+                  <td><t:actionlink t:id="cancelBooking" context="booking.id">Cancel</t:actionlink></td>
+              </tr>              
+          </tbody>
+      </table>
+    </p:else>
+  </t:if>
+</div>
+   
+</body>
+</html>
