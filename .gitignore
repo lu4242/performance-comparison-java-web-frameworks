@@ -7,3 +7,4 @@ target
 .classpath
 .svn
 /perfbench-code/build.properties
+/state-size-test/.idea/
