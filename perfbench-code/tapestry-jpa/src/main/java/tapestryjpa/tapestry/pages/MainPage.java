@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import tapestryjpa.entity.Booking;
 import tapestryjpa.web.BookingSession;
 import tapestryjpa.entity.Hotel;
+import tapestryjpa.tapestry.components.Template;
 import tapestryjpa.tapestry.services.JpaService;
 
 public class MainPage {
@@ -84,7 +85,10 @@ public class MainPage {
         EntityManager em = jpa.getEntityManager();
         Booking cancelled = em.find(Booking.class, bookingId);        
         if (cancelled != null) {
-            logger.info("Cancel booking: {} for {}", cancelled.getId(), session.getUser().getUsername());
+            if (Template.LOG_ENABLED)
+            {
+                logger.info("Cancel booking: {} for {}", cancelled.getId(), session.getUser().getUsername());
+            }
             em.remove(cancelled);            
             message = "Booking cancelled for confirmation number " + cancelled.getId();
         }

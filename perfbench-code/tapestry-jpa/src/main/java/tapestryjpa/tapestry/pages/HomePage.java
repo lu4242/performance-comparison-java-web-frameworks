@@ -5,7 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.IncludeStylesheet;
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
@@ -14,9 +14,10 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 import tapestryjpa.web.BookingSession;
 import tapestryjpa.entity.User;
+import tapestryjpa.tapestry.components.Template;
 import tapestryjpa.tapestry.services.JpaService;
 
-@IncludeStylesheet("context:css/screen.css")
+@Import(stylesheet="context:css/screen.css")
 public class HomePage {
 
     @Property
@@ -50,14 +51,20 @@ public class HomePage {
         query.setParameter("password", password);
         List<User> users = query.getResultList();
         if (users.size() == 0) {
-            logger.error("Login failed");
+            if (Template.LOG_ENABLED)
+            {
+                logger.error("Login failed");
+            }
             message = "Login failed";
             return null;
         }
         User user = users.get(0);
         session = new BookingSession();
         session.setUser(user);
-        logger.info("Login succeeded");
+        if (Template.LOG_ENABLED)
+        {
+            logger.info("Login succeeded");
+        }
         message = "Welcome, " + user.getUsername();
         return MainPage.class;
     }

@@ -19,6 +19,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>3.3.1.GA</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>javassist</groupId>
@@ -46,13 +52,29 @@
                     <groupId>commons-logging</groupId>
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>3.1.0.GA</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        
         <dependency>
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
@@ -68,7 +90,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <debug>true</debug>
+				<!--
+                    <debug>true</debug>-->
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
@@ -103,9 +126,11 @@
     </profiles>
 
     <properties>
-        <tapestry.version>5.1.0.5</tapestry.version>
+	<!-- 5.1.0.5 -->
+        <tapestry.version>5.3.5</tapestry.version>
         <maven.jetty.plugin.version>6.1.16</maven.jetty.plugin.version>
-        <slf4j.version>1.4.2</slf4j.version>
+        <!-- 1.4.2 -->
+        <slf4j.version>1.6.2</slf4j.version>
     </properties>
 
 </project>

@@ -3,14 +3,14 @@ package tapestryjpa.tapestry.pages;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.apache.tapestry5.PersistenceConstants;
-import org.apache.tapestry5.annotations.IncludeStylesheet;
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import tapestryjpa.entity.User;
 import tapestryjpa.tapestry.services.JpaService;
 
-@IncludeStylesheet("context:css/screen.css")
+@Import(stylesheet="context:css/screen.css")
 public class RegisterPage {
 
     @Property

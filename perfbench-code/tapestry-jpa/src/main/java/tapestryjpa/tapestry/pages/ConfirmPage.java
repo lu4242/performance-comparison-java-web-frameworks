@@ -11,6 +11,7 @@ import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 import tapestryjpa.entity.Booking;
+import tapestryjpa.tapestry.components.Template;
 import tapestryjpa.tapestry.services.AppModule;
 import tapestryjpa.tapestry.services.JpaService;
 import tapestryjpa.web.BookingSession;
@@ -71,8 +72,11 @@ public class ConfirmPage {
         jpa.getEntityManager().persist(booking);
         message = String.format("Thank you, %s, your confimation number for %s is %s",
                 session.getUser().getName(), booking.getHotel().getName(), booking.getId());
-        logger.info(String.format("New booking: %s for %s",
-                booking.getId(), session.getUser().getUsername()));
+        if (Template.LOG_ENABLED)
+        {
+            logger.info(String.format("New booking: %s for %s",
+                    booking.getId(), session.getUser().getUsername()));
+        }
         session.loadBookings(jpa.getEntityManager());
         jpa.getEntityManager().getTransaction().commit();
         session.finishFlow(flowId);
