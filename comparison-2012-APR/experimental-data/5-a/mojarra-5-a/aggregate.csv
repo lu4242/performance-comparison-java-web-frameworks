@@ -1,0 +1,13 @@
+sampler_label,aggregate_report_count,average,aggregate_report_median,aggregate_report_90%_line,aggregate_report_min,aggregate_report_max,aggregate_report_error%,aggregate_report_rate,aggregate_report_bandwidth
+Thread Group:get login,500,2,3,5,2,17,0.0,69.8909700866648,150.53941632303608
+Thread Group:post login,500,5,5,7,3,18,0.0,69.92029086841,213.8957291812334
+Thread Group:ajax post search,500,5,5,8,4,19,0.0,69.94963626189144,285.38481590130107
+Thread Group:get view hotel,500,3,3,5,2,19,0.0,70.03782042302844,197.57929047310546
+Thread Group:post book hotel,500,7,7,9,5,34,0.0,70.0280112044818,453.18217130602244
+Thread Group:ajax post cc number,500,5,5,7,4,19,0.0,70.05744710662744,51.43174434286115
+Thread Group:ajax post cc name,500,5,5,7,4,44,0.0,70.08690776562938,45.56716735001402
+Thread Group:post booking details,500,6,6,8,4,22,0.0,70.11639321273313,231.8338285303604
+Thread Group:post confirm booking,500,7,7,9,5,22,0.0,70.11639321273313,521.6626787968027
+Thread Group:cancel booking,500,7,7,9,5,30,0.0,70.12622720897616,462.62929523141656
+Thread Group:get logout,500,5,5,8,3,18,0.0,70.17543859649122,157.05715460526315
+TOTAL,5500,5,5,8,2,44,0.0,763.1469404745387,2743.9440116813516
