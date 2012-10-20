@@ -2,6 +2,7 @@ package tapestryjpa.tapestry.pages;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
+import javax.persistence.EntityManager;
 import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
@@ -10,10 +11,11 @@ import tapestryjpa.entity.Booking;
 import tapestryjpa.web.BookingSession;
 import tapestryjpa.entity.Hotel;
 import tapestryjpa.tapestry.services.AppModule;
-import tapestryjpa.tapestry.services.JpaService;
+import tapestryjpa.tapestry.services.JpaEntityManagerFactoryService;
 
 public class HotelPage {    
 
+    @Property
     @SessionState
     private BookingSession session;
 
@@ -24,8 +26,11 @@ public class HotelPage {
 
     private boolean backSubmitted;
     
+    //@Inject
+    //private JpaService jpa;
+    
     @Inject
-    private JpaService jpa;
+    private JpaEntityManagerFactoryService jpaEmf;
 
     @InjectPage
     private BookPage bookPage;
@@ -54,7 +59,19 @@ public class HotelPage {
 
     void onActivate(long hotelId) {
         this.hotelId = hotelId;
-        hotel = jpa.getEntityManager().find(Hotel.class, hotelId);
+        EntityManager em = jpaEmf.createEntityManager();
+        em.getTransaction().begin();
+        try
+        {        
+            hotel = em.find(Hotel.class, hotelId);
+        }
+        finally
+        {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().commit();
+            }
+            em.close();
+        }
     }
 
     long onPassivate() {

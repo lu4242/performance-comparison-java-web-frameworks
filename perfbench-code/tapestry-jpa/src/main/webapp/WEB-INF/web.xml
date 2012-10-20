@@ -9,12 +9,15 @@
         <param-value>tapestryjpa.tapestry</param-value>
     </context-param>
 
-    <!--
     <context-param>
         <param-name>tapestry.gzip-compression-enabled</param-name>
         <param-value>false</param-value>
     </context-param>
-    -->
+    
+    <context-param>
+        <param-name>tapestry.production-mode</param-name>
+        <param-value>true</param-value>
+    </context-param>
 
     <filter>
         <filter-name>app</filter-name>

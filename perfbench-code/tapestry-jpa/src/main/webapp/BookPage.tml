@@ -29,7 +29,7 @@
     <div class="label">Nightly rate:</div>
     <div class="output"><t:output value="booking.hotel.price" format="currencyFormat"/></div>
   </div>
-  <t:form t:id="form">
+  <t:form t:id="form" validate="booking" t:clientvalidation="false">
     <div class="entry">
       <div class="label">Check In Date:</div>
       <t:datefield value="booking.checkinDate"/>
@@ -56,13 +56,15 @@
     <div class="entry">
       <div class="label">Credit Card #:</div>
       <div class="input">
-        <input t:type="TextField" t:value="booking.creditCard"/>
+        <input t:type="TextField" t:value="booking.creditCard" t:mixins="zoneUpdater" t:clientEvent="blur" t:event="validateCreditCardNumber" t:zone="creditCardMsgZone"/>
+        <t:zone t:id="creditCardMsgZone" id="creditCardMsgZone" class="errors">${creditCardMsg}</t:zone>
       </div>
     </div>
     <div class="entry">
       <div class="label">Credit Card Name:</div>
       <div class="input">
-        <input t:type="TextField" t:value="booking.creditCardName"/>
+        <input t:type="TextField" t:value="booking.creditCardName" t:mixins="zoneUpdater" t:clientEvent="blur" t:event="validateCreditCardName" t:zone="creditCardNameMsgZone"/>
+        <t:zone t:id="creditCardNameMsgZone" id="creditCardNameMsgZone" class="errors">${creditCardNameMsg}</t:zone>
       </div>
     </div>
     <div class="entry">

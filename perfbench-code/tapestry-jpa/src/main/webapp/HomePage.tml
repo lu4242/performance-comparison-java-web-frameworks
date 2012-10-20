@@ -33,6 +33,7 @@
                 </div>
             </fieldset>
             </form>
+            <br/><br/>
         </div>
     </div>
     <div class="footer">Created with Tapestry 5 and Hibernate 3</div>

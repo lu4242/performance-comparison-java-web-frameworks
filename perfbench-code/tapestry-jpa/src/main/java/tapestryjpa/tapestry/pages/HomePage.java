@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import tapestryjpa.web.BookingSession;
 import tapestryjpa.entity.User;
 import tapestryjpa.tapestry.components.Template;
-import tapestryjpa.tapestry.services.JpaService;
+import tapestryjpa.tapestry.services.JpaEntityManagerFactoryService;
 
 @Import(stylesheet="context:css/screen.css")
 public class HomePage {
@@ -34,39 +34,54 @@ public class HomePage {
     @Component
     private Form form;
 
+    @Property
     @SessionState(create=false)
     private BookingSession session;
 
+    //@Inject
+    //private JpaService jpa;
+    
     @Inject
-    private JpaService jpa;
+    private JpaEntityManagerFactoryService jpaEmf;
 
     @Inject
     private Logger logger;
 
     Object onSuccess() {
-        EntityManager em = jpa.getEntityManager();
-        Query query = em.createQuery("select u from User u"
-                + " where u.username = :username and u.password = :password");
-        query.setParameter("username", username);
-        query.setParameter("password", password);
-        List<User> users = query.getResultList();
-        if (users.size() == 0) {
+        //EntityManager em = jpa.getEntityManager();
+        EntityManager em = jpaEmf.createEntityManager();
+        em.getTransaction().begin();
+        try
+        {
+            Query query = em.createQuery("select u from User u"
+                    + " where u.username = :username and u.password = :password");
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+            List<User> users = query.getResultList();
+            if (users.size() == 0) {
+                if (Template.LOG_ENABLED)
+                {
+                    logger.error("Login failed");
+                }
+                message = "Login failed";
+                return null;
+            }
+            User user = users.get(0);
+            session = new BookingSession();
+            session.setUser(user);
             if (Template.LOG_ENABLED)
             {
-                logger.error("Login failed");
+                logger.info("Login succeeded");
             }
-            message = "Login failed";
-            return null;
+            message = "Welcome, " + user.getUsername();
         }
-        User user = users.get(0);
-        session = new BookingSession();
-        session.setUser(user);
-        if (Template.LOG_ENABLED)
+        finally
         {
-            logger.info("Login succeeded");
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().commit();
+            }
+            em.close();
         }
-        message = "Welcome, " + user.getUsername();
         return MainPage.class;
     }
-
 }

@@ -8,7 +8,8 @@
         <fieldset>
             <input t:type="TextField" t:value="session.searchString" style="width: 165px;"
                 t:mixins="ajaxFormSubmit" t:onEvent="onkeyup" t:formId="form"/>&#160;
-            <input type="submit" value="Find Hotels"/>
+            <input type="submit" value="Find Hotels(Ajax)"/>&#160;
+            <input type="submit" value="Find Hotels(POST)"/>
             <img id="ajaxIndicator" src="img/spinner.gif" style="display:none"/><br/>
             <span class="label">Maximum results:</span>&#160;
             <t:select t:value="session.pageSize" model="literal:5,10,20"/>

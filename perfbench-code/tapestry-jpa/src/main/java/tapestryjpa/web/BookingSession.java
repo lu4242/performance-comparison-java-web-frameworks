@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -14,14 +15,21 @@ public class BookingSession implements Serializable {
     private String searchString;
     private List<Hotel> hotels;
     private List<Booking> bookings;
-    private int pageSize = 10;
+    private int pageSize;
     private int page;
 
-    private int nextFlowId = 1;
-    private Map<Integer, Booking> bookingFlows = new ConcurrentHashMap<Integer, Booking>();
+    private AtomicInteger nextFlowId;
+    private Map<Integer, Booking> bookingFlows;
+    
+    public BookingSession()
+    {
+        pageSize=10;
+        nextFlowId=new AtomicInteger(1);
+        bookingFlows = new ConcurrentHashMap<Integer, Booking>();
+    }
 
-    public synchronized int startFlow(Booking booking) {
-        final int flowId = nextFlowId++;
+    public int startFlow(Booking booking) {
+        final int flowId = nextFlowId.incrementAndGet();
         bookingFlows.put(flowId, booking);
         return flowId;
     }
@@ -88,5 +96,4 @@ public class BookingSession implements Serializable {
         query.setParameter("username", user.getUsername());
         bookings = query.getResultList();
     }
-
 }

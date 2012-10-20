@@ -16,7 +16,7 @@ import tapestryjpa.entity.Booking;
 import tapestryjpa.web.BookingSession;
 import tapestryjpa.entity.Hotel;
 import tapestryjpa.tapestry.components.Template;
-import tapestryjpa.tapestry.services.JpaService;
+import tapestryjpa.tapestry.services.JpaEntityManagerFactoryService;
 
 public class MainPage {
     
@@ -28,8 +28,8 @@ public class MainPage {
     @SessionState
     private BookingSession session;
 
-    @Inject
-    private JpaService jpa;
+    //@Inject
+    //private JpaService jpa;
 
     @Component
     private Form form;
@@ -45,6 +45,9 @@ public class MainPage {
 
     @Inject
     private Logger logger;
+    
+    @Inject
+    private JpaEntityManagerFactoryService jpaEmf;
 
     public boolean isNextPageAvailable() {
         return session.getHotels() != null && session.getHotels().size() == session.getPageSize();
@@ -52,25 +55,64 @@ public class MainPage {
 
     void onActivate() {
         if(session.getBookings() == null) {
-            session.loadBookings(jpa.getEntityManager());
+            EntityManager em = jpaEmf.createEntityManager();
+            em.getTransaction().begin();
+            try
+            {
+                session.loadBookings(em);
+            }
+            finally
+            {
+                if (em.getTransaction().isActive())
+                {
+                    em.getTransaction().commit();
+                }
+                em.close();
+            }
         }
     }
 
     Object onSuccess() {
         session.setPage(0);
-        loadHotels();
+        EntityManager em = jpaEmf.createEntityManager();
+        em.getTransaction().begin();
+        try
+        {
+            loadHotels(em);
+        }
+        finally
+        {
+            if (em.getTransaction().isActive())
+            {
+                em.getTransaction().commit();
+            }
+            em.close();
+        }
         return hotelsZone.getBody();
     }
 
     void onActionFromNextPage() {
         session.setPage(session.getPage() + 1);
-        loadHotels();
+        EntityManager em = jpaEmf.createEntityManager();
+        em.getTransaction().begin();
+        try
+        {
+            loadHotels(em);
+        }
+        finally
+        {
+            if (em.getTransaction().isActive())
+            {
+                em.getTransaction().commit();
+            }
+            em.close();
+        }
     }
 
-    void loadHotels() {
+    void loadHotels(EntityManager em) {
         String searchString = session.getSearchString();
         String pattern = searchString == null ? "%" : '%' + searchString.toLowerCase().replace('*', '%') + '%';
-        Query query = jpa.getEntityManager().createQuery("select h from Hotel h"
+        Query query = em.createQuery("select h from Hotel h"
                 + " where lower(h.name) like :pattern"
                 + " or lower(h.city) like :pattern"
                 + " or lower(h.zip) like :pattern"
@@ -82,17 +124,35 @@ public class MainPage {
     }
 
     void onActionFromCancelBooking(long bookingId) {
-        EntityManager em = jpa.getEntityManager();
-        Booking cancelled = em.find(Booking.class, bookingId);        
-        if (cancelled != null) {
-            if (Template.LOG_ENABLED)
-            {
-                logger.info("Cancel booking: {} for {}", cancelled.getId(), session.getUser().getUsername());
+        EntityManager em = jpaEmf.createEntityManager();
+        em.getTransaction().begin();
+        try
+        {
+            Booking cancelled = em.find(Booking.class, bookingId);        
+            if (cancelled != null) {
+                if (Template.LOG_ENABLED)
+                {
+                    logger.info("Cancel booking: {} for {}", cancelled.getId(), session.getUser().getUsername());
+                }
+                em.remove(cancelled);            
+                message = "Booking cancelled for confirmation number " + cancelled.getId();
             }
-            em.remove(cancelled);            
-            message = "Booking cancelled for confirmation number " + cancelled.getId();
+            else
+            {
+                if (Template.LOG_ENABLED)
+                {
+                    logger.info("Cancel booking: {} for {} not found", cancelled.getId(), session.getUser().getUsername());
+                }
+            }
+            session.loadBookings(em);
         }
-        session.loadBookings(em);
+        finally
+        {
+            if (em.getTransaction().isActive())
+            {
+                em.getTransaction().commit();
+            }
+            em.close();
+        }
     }
-    
 }
