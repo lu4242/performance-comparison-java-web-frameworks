@@ -75,10 +75,10 @@ public class BookingApplication extends WebApplication {
         return new UrlCompressingWebRequestProcessor();
     }
 
-    //@Override
-    //protected ISessionStore newSessionStore() {
-    //    return new HttpSessionStore(this);
-    //}
+    @Override
+    protected ISessionStore newSessionStore() {
+        return new HttpSessionStore(this);
+    }
 
     @Override
     protected IConverterLocator newConverterLocator() {
