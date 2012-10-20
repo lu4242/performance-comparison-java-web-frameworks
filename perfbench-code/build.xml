@@ -177,6 +177,27 @@ jmeter.home=C:/jakarta-jmeter-2.3.2
         </jmeter>
     </target>
 
+    <!-- like jmeter-custom, but does not log report -->
+    <target name="jmeter-custom-warmup-no-ajax" depends="jmeter-input-custom-no-ajax, jmeter-init">    
+        <echo>jmeter: loop count: ${loop.count}, thread count: ${thread.count}, booking count: ${booking.count}</echo>
+        <echo>jmeter: include logout: ${include.logout}, include delete: ${include.delete}, include ajax: ${include.ajax}</echo>
+        <echo>jmeter: thread delay: ${thread.delay}, thread deviation: ${thread.deviation}</echo>
+        <jmeter jmeterhome="${jmeter.home}" testplan="${jmeter.script}"  resultlog="../target/${war.name}_warmup_${thread.count}_${loop.count}.jtl">
+            <property name="jmeter.save.saveservice.assertion_results" value="all"/>
+            <property name="jmeter.save.saveservice.output_format" value="xml"/>
+            <property name="thread.count" value="${thread.count}"/>
+            <property name="include.logout" value="${include.logout}"/>
+            <property name="include.delete" value="${include.delete}"/>
+		    <property name="include.ajax" value="${include.ajax}"/>
+            <property name="loop.count" value="${loop.count}"/>
+            <property name="booking.count" value="${booking.count}"/>
+            <property name="thread.delay" value="${thread.delay}"/>
+            <property name="thread.deviation" value="${thread.deviation}"/>
+            <property name="thread.rampup" value="${thread.rampup}"/>
+            <property name="context.host" value="${context.host}"/>
+        </jmeter>
+    </target>
+
     <target name="jmeter-input-custom-no-ajax" unless="thread.count">
         <input message="loop count:" addproperty="loop.count"/>
         <input message="number of threads:" addproperty="thread.count"/>
