@@ -14,6 +14,7 @@ import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -162,6 +163,12 @@ public class MainPage extends TemplatePage {
 	            {
 	            }
             });
+            add(new Button("submitPost") {
+                @Override
+                public void onSubmit() {                    
+                    refreshHotelsContainer();
+                }
+            });
         }
 
 //        @Override
@@ -171,6 +178,11 @@ public class MainPage extends TemplatePage {
 
     }
 
+    private void refreshHotelsContainer() {
+        getBookingSession().setPage(0);
+        loadHotels();
+    }    
+    
     private void refreshHotelsContainer(AjaxRequestTarget target) {        
         getBookingSession().setPage(0);
         loadHotels();

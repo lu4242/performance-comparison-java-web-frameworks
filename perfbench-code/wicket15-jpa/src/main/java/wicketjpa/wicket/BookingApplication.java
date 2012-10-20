@@ -61,7 +61,6 @@ public class BookingApplication extends WebApplication {
         
         // Store pages into session. Test shows a big detriment in performance.
         // when using it. Too bad.
-        /*
         setPageManagerProvider(new DefaultPageManagerProvider(this)
         {
             protected IDataStore newDataStore() 
@@ -69,16 +68,14 @@ public class BookingApplication extends WebApplication {
                 return  new HttpSessionDataStore(pageManagerContext, new PageNumberEvictionStrategy(10));
             }
         });
-        */
     }
 
-    /*
     private final IPageManagerContext pageManagerContext = new DefaultPageManagerContext();
 
     @Override
     protected IPageManagerContext getPageManagerContext() {
         return pageManagerContext;
-    }*/
+    }
 
     @Override
     protected void onDestroy() {
