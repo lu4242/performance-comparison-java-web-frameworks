@@ -84,10 +84,11 @@
         <param-value>Production</param-value>
     </context-param>
 
+<!--
     <context-param>
         <param-name>org.apache.myfaces.SAVE_STATE_WITH_VISIT_TREE_ON_PSS</param-name>
         <param-value>false</param-value>
-    </context-param>
+    </context-param>-->
 
     <context-param>
         <param-name>org.apache.myfaces.annotation.SCAN_PACKAGES</param-name>

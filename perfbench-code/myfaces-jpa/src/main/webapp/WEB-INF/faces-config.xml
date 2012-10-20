@@ -10,5 +10,11 @@
     <lifecycle>
         <phase-listener>jsf2jpa.beans.CheckUserPhaseListener</phase-listener>
     </lifecycle>
-
+    <faces-config-extension>
+        <facelets-processing>
+            <file-extension>.xhtml</file-extension>
+            <process-as>xhtml</process-as>
+            <oam-compress-spaces>true</oam-compress-spaces>
+        </facelets-processing> 
+    </faces-config-extension>
 </faces-config>
