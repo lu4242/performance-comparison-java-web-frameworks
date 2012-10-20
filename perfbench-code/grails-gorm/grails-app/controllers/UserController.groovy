@@ -14,7 +14,7 @@ class UserController {
         def user = User.findByUsernameAndPassword(params.username, params.password)
         if(user) {
             session.user = user
-            log.info 'Login succeeded'
+            //log.info 'Login succeeded'
             flash.message = "Welcome, ${user.name}"
             redirect(controller: 'main')
         } else {

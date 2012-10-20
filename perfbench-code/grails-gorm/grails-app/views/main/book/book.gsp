@@ -35,12 +35,12 @@
   <g:form action="book">
     <div class="entry">
       <div class="label">Check In Date:</div>
-      <g:datePicker name="checkinDate" value="${booking.checkinDate}" precision="day" years="[2009, 2010]"/>
+      <g:datePicker name="checkinDate" value="${booking.checkinDate}" precision="day" years="[2009, 2010, 2011, 2012, 2013, 2014]"/>
       <g:formmsg bean="${booking}" name="checkinDate"/>
     </div>
     <div class="entry">
       <div class="label">Check Out Date:</div>
-      <g:datePicker name="checkoutDate" value="${booking.checkoutDate}" precision="day" years="[2009, 2010]"/>
+      <g:datePicker name="checkoutDate" value="${booking.checkoutDate}" precision="day" years="[2009, 2010, 2011, 2012, 2013, 2014]"/>
       <g:formmsg bean="${booking}" name="checkoutDate"/>
     </div>
     <div class="entry">
@@ -75,7 +75,7 @@
       <div class="input">
         <g:select name="creditCardExpiryMonth" value="${booking.creditCardExpiryMonth}" optionKey="key" optionValue="value"
                   from="${[1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec']}"/>
-        <g:select name="creditCardExpiryYear" value="${booking.creditCardExpiryYear}" from="${2006..2010}"/>
+        <g:select name="creditCardExpiryYear" value="${booking.creditCardExpiryYear}" from="${2006..2014}"/>
       </div>
     </div>
     <div class="entry">

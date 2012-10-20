@@ -78,7 +78,7 @@ class MainController {
                 def booking = flow.booking
                 booking.save()
                 flow.message = "Thank you, ${session.user.name}, your confimation number for ${booking.hotel.name} is ${booking.id}"
-                log.info "New booking: ${booking.id} for ${session.user.username}"
+                //log.info "New booking: ${booking.id} for ${session.user.username}"
                 this.loadBookings()
             }.to "finish"
             on("revise").to "book"
@@ -91,7 +91,7 @@ class MainController {
 
     def cancelBooking = {
         def booking = Booking.get(params.id)
-        log.info "Cancel booking: ${booking.id} for ${session.user.username}"
+        //log.info "Cancel booking: ${booking.id} for ${session.user.username}"
         if(booking != null) {
             booking.delete()
             flash.message = "Booking cancelled for confirmation number ${booking.id}"
