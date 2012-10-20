@@ -8,3 +8,4 @@ target
 .svn
 /perfbench-code/build.properties
 /state-size-test/.idea/
+/perfbench-code/grails-gorm/plugins
