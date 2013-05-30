@@ -610,14 +610,14 @@
                       </elementProp>
                       <elementProp name="booking:creditCard" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">1234123412341234</stringProp>
+                        <stringProp name="Argument.value">123412341234</stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">booking:creditCard</stringProp>
                       </elementProp>
                       <elementProp name="booking:creditCardName" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value"></stringProp>
+                        <stringProp name="Argument.value">Test User</stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">booking:creditCardName</stringProp>
@@ -666,21 +666,21 @@
                       </elementProp>
                       <elementProp name="javax.faces.partial.execute" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">booking:creditCardName</stringProp>
+                        <stringProp name="Argument.value">booking:creditCard</stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">javax.faces.partial.execute</stringProp>
                       </elementProp>
                       <elementProp name="javax.faces.partial.render" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">booking:creditCardNameDecorate</stringProp>
+                        <stringProp name="Argument.value">booking:creditCardDecorate</stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">javax.faces.partial.render</stringProp>
                       </elementProp>
                       <elementProp name="javax.faces.source" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">booking:creditCardName</stringProp>
+                        <stringProp name="Argument.value">booking:creditCard</stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">javax.faces.source</stringProp>
@@ -780,7 +780,7 @@
                       </elementProp>
                       <elementProp name="booking:creditCardName" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">Test User</stringProp>
+                        <stringProp name="Argument.value"></stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">booking:creditCardName</stringProp>

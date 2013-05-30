@@ -153,9 +153,43 @@
         </plugins>
     </build>
     
+    <!-- Debug profile for myfaces and jetty.
+        It allows to see debug messages using -PjettyConfig -->
     <profiles>
-        <!-- Debug profile for myfaces and jetty.
-            It allows to see debug messages using -PjettyConfig -->
+        
+        <profile>
+          <!-- Profile for deploy on tomcat 7 (final optimized configuration
+               mvn clean install -Dstage=production -->
+          <id>production-tomcat-7</id>
+          <activation>
+            <property>
+              <name>container</name>
+              <value>production</value>
+            </property>
+          </activation>
+          <build>
+            <plugins>
+              <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                  <webResources>
+                    <resource>
+                      <directory>src/main/webapp-prod</directory>
+                    </resource>
+                  </webResources>
+                </configuration>
+              </plugin>
+            </plugins>
+          </build>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.geronimo.specs</groupId>
+              <artifactId>geronimo-el_2.2_spec</artifactId>
+              <version>1.0.4</version>
+              <scope>provided</scope>
+            </dependency>
+          </dependencies>
+        </profile>
         <profile>
             <id>jettyConfig</id>
             <activation>
@@ -214,10 +248,10 @@
     </profiles>
 
     <properties>
-        <jsf-ri.version>2.1.7</jsf-ri.version>
+        <jsf-ri.version>2.1.20</jsf-ri.version>
         <myfaces.version>2.1.6-SNAPSHOT</myfaces.version>
         <maven.jetty.plugin.version>6.1.16</maven.jetty.plugin.version>
-        <slf4j.version>1.4.2</slf4j.version>        
+        <slf4j.version>1.4.2</slf4j.version>
     </properties>
 
 </project>
