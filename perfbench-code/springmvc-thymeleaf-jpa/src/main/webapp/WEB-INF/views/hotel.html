@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout/header :: header">
+</head>
+<body id="pgHome">
+<div id="document">
+<div id="header" th:include="layout/divheader :: divheader"></div>
+<div id="container">
+  <div id="sidebar">
+  </div>
+  <div id="content">
+   <div class="section">
+    <h1>View Hotel</h1>
+   </div>
+   <div class="section">
+    <div class="entry">
+     <div class="label">Name:</div>
+     <div class="output" id="name" th:text="${hotel.name}"></div>
+    </div>
+    <div class="entry">
+     <div class="label">Address:</div>
+     <div class="output" id="address" th:text="${hotel.address}"></div>
+    </div>
+    <div class="entry">
+     <div class="label">City:</div>
+     <div class="output" id="city" th:text="${hotel.city}"></div>
+    </div>
+    <div class="entry">
+     <div class="label">State:</div>
+     <div class="output" id="state" th:text="${hotel.state}"></div>
+    </div>
+    <div class="entry">
+     <div class="label">Zip:</div>
+     <div class="output" id="zip" th:text="${hotel.zip}"></div>
+    </div>
+    <div class="entry">
+     <div class="label">Country:</div>
+     <div class="output" id="country" th:text="${hotel.country}"></div>
+    </div>
+    <div class="entry">
+     <div class="label">Nightly rate:</div>
+     <div class="output" id="price" th:text="${hotel.price}"></div>
+    </div>
+   </div>
+   <div class="section">
+    <form id="form" method="post" th:action="${'hotel.do'}">
+     <fieldset class="buttonBox">
+      <input type="submit" name="book" value="Book Hotel"/>
+      <input type="submit" name="cancel" value="Back to Search"/>
+     </fieldset>
+    </form>
+   </div>
+</div>
+<div id="footer">Created with JBoss EJB 3.0, Spring MVC</div>
+</div>
+</div>
+</body>
+</html>

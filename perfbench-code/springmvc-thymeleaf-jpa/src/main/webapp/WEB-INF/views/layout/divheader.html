@@ -1,0 +1,16 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+<div id="header" th:fragment="divheader">
+ <div id="title"><img src="img/hdr.title.gif" alt="JBoss Suites: seam framework demo"/></div>
+ <div id="status">
+  Welcome <span th:text="${bookingSession.user.name}"></span>
+  | <a href="main.do">Search</a>
+  | <a href="password.do">Settings</a>
+  | <a href="logout.do">Logout</a>
+ </div>
+</div>
+</body>
+</html>
