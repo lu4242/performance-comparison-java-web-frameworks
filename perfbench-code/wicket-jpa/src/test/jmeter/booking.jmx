@@ -428,7 +428,7 @@
                     <collectionProp name="Arguments.arguments">
                       <elementProp name="creditCardBorder:creditCard" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                        <stringProp name="Argument.value">1234123412341234</stringProp>
+                        <stringProp name="Argument.value">123412341234</stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">creditCardBorder:creditCard</stringProp>
@@ -466,7 +466,7 @@
                     <collectionProp name="Arguments.arguments">
                       <elementProp name="creditCardNameBorder:creditCardName" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">true</boolProp>
-                        <stringProp name="Argument.value">Test Name</stringProp>
+                        <stringProp name="Argument.value"></stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">creditCardNameBorder:creditCardName</stringProp>
