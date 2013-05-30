@@ -11,7 +11,8 @@
     <description>grails2-gorm</description>
 
     <properties>
-        <grails.version>2.1.1</grails.version>
+        <!-- 2.1.1 -->
+        <grails.version>2.2.1</grails.version>
 		<maven.jetty.plugin.version>6.1.16</maven.jetty.plugin.version>
     </properties>
 
@@ -24,6 +25,13 @@
             <type>pom</type>
         </dependency>
 
+       <dependency>
+            <groupId>org.grails</groupId>
+            <artifactId>grails-test</artifactId>
+            <version>${grails.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
         <dependency>
             <groupId>org.grails</groupId>
             <artifactId>grails-plugin-testing</artifactId>
@@ -31,6 +39,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- http://jira.grails.org/browse/GRAILS-9875 -->
+        <dependency>
+            <groupId>com.googlecode.concurrentlinkedhashmap</groupId>
+            <artifactId>concurrentlinkedhashmap-lru</artifactId>
+            <version>1.3.2</version>
+        </dependency>
         
 
         <dependency>
