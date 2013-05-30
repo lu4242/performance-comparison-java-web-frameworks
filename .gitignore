@@ -9,3 +9,4 @@ target
 /perfbench-code/build.properties
 /state-size-test/.idea/
 /perfbench-code/grails-gorm/plugins
+/perfbench-code/grails2-gorm/plugins
