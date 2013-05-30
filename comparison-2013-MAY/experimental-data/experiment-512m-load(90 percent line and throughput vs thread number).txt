@@ -1,0 +1,33 @@
+Configuration
+
+Processor: AMD Phenom x4
+Speed:     2300 MHz
+Server: Apache Tomcat 7.0.37
+JVM Options : -Xms512m -Xmx512m -server
+JVM version : oracle jdk1.6.0_37 for linux
+
+WARMUP
+
+loop.count: 200
+thread.count: 100
+include.logout : 1
+include.delete: 1
+booking.count: 1
+include.ajax: 1
+thread.delay: 20	
+thread.deviation:10
+rampup time: 20
+client: HttpClient4 
+
+EXPERIMENT
+
+thread.count: 10,20,30,40,80,120,160,200
+include.logout : 1
+include.delete: 1
+loop.count: 100
+booking.count: 1
+include.ajax: 1
+thread.delay: 0
+thread.deviation:0
+rampup time: 1,2,3,4,8,12,16,20
+client: HttpClient4 
