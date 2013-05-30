@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
 
 import jsf2jpa.entity.Booking;
 import jsf2jpa.entity.Hotel;
@@ -105,21 +106,22 @@ public class HotelBookingAction extends SimpleAction {
     {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         Booking booking = getBookingBean().getBooking();
+        EntityManager em = getEntityManager();
         try
         {
-            getEntityManager().getTransaction().begin();
-            getEntityManager().persist(booking);
-            getEntityManager().getTransaction().commit();
+            em.getTransaction().begin();
+            em.persist(booking);
+            em.getTransaction().commit();
             facesContext.addMessage(null, new FacesMessage("Thank you, "+booking.getUser().getName()+
                     ", your confimation number for "+booking.getHotel().getName()+" is "+ booking.getId()));
-            getBookingListAction().loadBookings();
+            getBookingListAction().loadBookings(em);
         }
         catch (Exception e)
         {
             facesContext.addMessage(null, new FacesMessage("Error when register on database"));
-            if (getEntityManager().getTransaction().isActive())
+            if (em.getTransaction().isActive())
             {
-                getEntityManager().getTransaction().rollback();
+                em.getTransaction().rollback();
             }
         }
         if (BookingApplication.LOG_ENABLED)

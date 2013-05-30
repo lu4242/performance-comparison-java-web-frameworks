@@ -38,12 +38,14 @@
         <dependency>
             <groupId>org.apache.myfaces.core</groupId>
             <artifactId>myfaces-api</artifactId>
-            <version>2.1.10-SNAPSHOT</version>
+            <version>${myfaces.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.myfaces.core</groupId>
             <artifactId>myfaces-impl</artifactId>
-            <version>2.1.10-SNAPSHOT</version>
+            <version>${myfaces.version}</version>
+            <scope>compile</scope>
         </dependency>
         
         <dependency>
@@ -154,6 +156,40 @@
     <!-- Debug profile for myfaces and jetty.
         It allows to see debug messages using -PjettyConfig -->
     <profiles>
+        
+        <profile>
+          <!-- Profile for deploy on tomcat 7 (final optimized configuration
+               mvn clean install -Dstage=production -->
+          <id>production-tomcat-7</id>
+          <activation>
+            <property>
+              <name>container</name>
+              <value>production</value>
+            </property>
+          </activation>
+          <build>
+            <plugins>
+              <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                  <webResources>
+                    <resource>
+                      <directory>src/main/webapp-prod</directory>
+                    </resource>
+                  </webResources>
+                </configuration>
+              </plugin>
+            </plugins>
+          </build>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.geronimo.specs</groupId>
+              <artifactId>geronimo-el_2.2_spec</artifactId>
+              <version>1.0.4</version>
+              <scope>provided</scope>
+            </dependency>
+          </dependencies>
+        </profile>
         <profile>
             <id>jettyConfig</id>
             <activation>
@@ -166,7 +202,7 @@
                 <dependency>
                     <groupId>org.apache.geronimo.specs</groupId>
                     <artifactId>geronimo-el_2.2_spec</artifactId>
-                    <version>1.0.2</version>
+                    <version>1.0.4</version>
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
@@ -332,7 +368,7 @@
     </profiles>
 
     <properties>
-        <myfaces.version>2.1.5</myfaces.version>
+        <myfaces.version>2.1.11</myfaces.version>
         <maven.jetty.plugin.version>6.1.16</maven.jetty.plugin.version>
         <slf4j.version>1.4.2</slf4j.version>
         <jetty.maven.plugin.version>8.1.1.v20120215</jetty.maven.plugin.version>

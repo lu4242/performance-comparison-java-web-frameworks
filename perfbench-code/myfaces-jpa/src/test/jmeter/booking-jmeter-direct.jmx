@@ -580,61 +580,12 @@
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">booking</stringProp>
                       </elementProp>
-                      <elementProp name="booking:checkinDate" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">06/06/2022</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking:checkinDate</stringProp>
-                      </elementProp>
-                      <elementProp name="booking:checkoutDate" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">06/07/2022</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking:checkoutDate</stringProp>
-                      </elementProp>
-                      <elementProp name="booking:beds" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">1</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking:beds</stringProp>
-                      </elementProp>
-                      <elementProp name="booking:smoking" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">false</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking:smoking</stringProp>
-                      </elementProp>
                       <elementProp name="booking:creditCard" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">1234123412341234</stringProp>
+                        <stringProp name="Argument.value">123412341234</stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">booking:creditCard</stringProp>
-                      </elementProp>
-                      <elementProp name="booking:creditCardName" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value"></stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking:creditCardName</stringProp>
-                      </elementProp>
-                      <elementProp name="booking:creditCardExpiryMonth" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">1</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking:creditCardExpiryMonth</stringProp>
-                      </elementProp>
-                      <elementProp name="booking:creditCardExpiryYear" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">2005</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking:creditCardExpiryYear</stringProp>
                       </elementProp>
                       <elementProp name="javax.faces.ViewState" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">true</boolProp>
@@ -666,31 +617,24 @@
                       </elementProp>
                       <elementProp name="javax.faces.partial.execute" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">booking:creditCardName</stringProp>
+                        <stringProp name="Argument.value">booking:creditCard</stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">javax.faces.partial.execute</stringProp>
                       </elementProp>
                       <elementProp name="javax.faces.partial.render" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">booking:creditCardNameDecorate</stringProp>
+                        <stringProp name="Argument.value">booking:creditCardDecorate</stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">javax.faces.partial.render</stringProp>
                       </elementProp>
                       <elementProp name="javax.faces.source" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">booking:creditCardName</stringProp>
+                        <stringProp name="Argument.value">booking:creditCard</stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">javax.faces.source</stringProp>
-                      </elementProp>
-                      <elementProp name="booking_SUBMIT" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">1</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking_SUBMIT</stringProp>
                       </elementProp>
                     </collectionProp>
                   </elementProp>
@@ -743,61 +687,12 @@
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">booking</stringProp>
                       </elementProp>
-                      <elementProp name="booking:checkinDate" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">06/06/2022</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking:checkinDate</stringProp>
-                      </elementProp>
-                      <elementProp name="booking:checkoutDate" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">06/07/2022</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking:checkoutDate</stringProp>
-                      </elementProp>
-                      <elementProp name="booking:beds" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">1</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking:beds</stringProp>
-                      </elementProp>
-                      <elementProp name="booking:smoking" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">false</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking:smoking</stringProp>
-                      </elementProp>
-                      <elementProp name="booking:creditCard" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">1234123412341234</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking:creditCard</stringProp>
-                      </elementProp>
                       <elementProp name="booking:creditCardName" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">Test User</stringProp>
+                        <stringProp name="Argument.value"></stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">booking:creditCardName</stringProp>
-                      </elementProp>
-                      <elementProp name="booking:creditCardExpiryMonth" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">1</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking:creditCardExpiryMonth</stringProp>
-                      </elementProp>
-                      <elementProp name="booking:creditCardExpiryYear" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">2005</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking:creditCardExpiryYear</stringProp>
                       </elementProp>
                       <elementProp name="javax.faces.ViewState" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">true</boolProp>
@@ -847,13 +742,6 @@
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">javax.faces.source</stringProp>
-                      </elementProp>
-                      <elementProp name="booking_SUBMIT" elementType="HTTPArgument">
-                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">1</stringProp>
-                        <stringProp name="Argument.metadata">=</stringProp>
-                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                        <stringProp name="Argument.name">booking_SUBMIT</stringProp>
                       </elementProp>
                     </collectionProp>
                   </elementProp>

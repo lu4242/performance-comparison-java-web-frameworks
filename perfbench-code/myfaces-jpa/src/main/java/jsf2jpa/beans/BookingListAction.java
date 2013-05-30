@@ -29,7 +29,12 @@ public class BookingListAction implements Serializable {
 
     public void loadBookings()
     {
-        Query query = getEntityManager().createQuery("select b from Booking b"
+        loadBookings(getEntityManager());
+    }
+    
+    public void loadBookings(EntityManager em)
+    {
+        Query query = em.createQuery("select b from Booking b"
                 + " where b.user.username = :username order by b.checkinDate");
         query.setParameter("username", getBookingSession().getUser().getUsername());
         bookings = query.getResultList();
@@ -47,7 +52,7 @@ public class BookingListAction implements Serializable {
             em.remove(cancelled);
             em.getTransaction().commit();
         }
-        loadBookings();
+        loadBookings(em);
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage("Booking cancelled for confirmation number "+cancelled.getId()));
     }
