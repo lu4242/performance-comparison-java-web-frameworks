@@ -18,7 +18,7 @@
 </div>
 
 <div class="section">
-<t:zone t:id="hotelsZone">    
+<t:zone t:id="hotelsZone" id="hotelsZone">    
     <t:if test="!session.hotels">
         No Hotels Found
         <p:else>

@@ -486,7 +486,7 @@
                       </elementProp>
                       <elementProp name="param" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">1234123412341234</stringProp>
+                        <stringProp name="Argument.value">123412341234</stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">param</stringProp>
@@ -552,7 +552,7 @@
                       </elementProp>
                       <elementProp name="param" elementType="HTTPArgument">
                         <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                        <stringProp name="Argument.value">Thread ${__threadNum} Loop ${loopCount}</stringProp>
+                        <stringProp name="Argument.value"></stringProp>
                         <stringProp name="Argument.metadata">=</stringProp>
                         <boolProp name="HTTPArgument.use_equals">true</boolProp>
                         <stringProp name="Argument.name">param</stringProp>
